@@ -1,6 +1,0 @@
-/home/badr/Desktop/CBit_Compiler/compiler/build/CMakeFiles/rebuild_cache.dir
-/home/badr/Desktop/CBit_Compiler/compiler/build/CMakeFiles/edit_cache.dir
-/home/badr/Desktop/CBit_Compiler/compiler/build/CMakeFiles/cbit.dir
-/home/badr/Desktop/CBit_Compiler/compiler/build/src/frontend/CMakeFiles/edit_cache.dir
-/home/badr/Desktop/CBit_Compiler/compiler/build/src/frontend/CMakeFiles/rebuild_cache.dir
-/home/badr/Desktop/CBit_Compiler/compiler/build/src/frontend/CMakeFiles/frontend.dir
