@@ -1,10 +1,21 @@
-#ifndef _OPTION_PARSER_H_
-#define _OPTION_PARSER_H_
+/**
+ * @file OptionParser.hpp
+ * @author abadr99 (abdelrhmanezzbadr@outlook.com)
+ * @brief 
+ * @version 0.1
+ * @date 2024-04-27
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 
-#include "CompilerOptions.hpp"
+#ifndef COMPILER_DEV_INC_COMMON_OPTIONPARSER_HPP_
+#define COMPILER_DEV_INC_COMMON_OPTIONPARSER_HPP_
+
+#include "common/CompilerOptions.hpp"
 
 namespace cbit {
-namespace options{
+namespace options {
 
 class OptionParser {
  public:
@@ -15,7 +26,7 @@ class OptionParser {
   char** argv_;
 };
 
-}
-}
+}   // namespace options
+}   // namespace cbit
 
-#endif // _OPTION_PARSER_H_
+#endif  // COMPILER_DEV_INC_COMMON_OPTIONPARSER_HPP_
