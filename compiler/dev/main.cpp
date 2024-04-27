@@ -17,7 +17,7 @@ using namespace cbit::options;
 int main(int argc, char* argv[]) {
     // Parse all option through command line and fill data in `CompilerOption`
     // according to parsed data.
-    OptionParser op(argc, argv)
+    OptionParser op(argc, argv);
     
     // TODO(@abadr): Combine frontend process to one class
     // Run frontend process
