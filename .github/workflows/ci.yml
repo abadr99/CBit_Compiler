@@ -26,9 +26,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Configure Compiler Building
-      run: echo ${{ github.workspace }}
+      run: sh ${{ github.workspace }}/scripts/github/confgiureBuild.sh
     - name: Building Compiler
-      run: sh ./scripts/github/buildCompiler.sh
+      run: sh ${{ github.workspace }}/scripts/github/buildCompiler.sh
     - name: Upload objects artifact
       uses: actions/upload-artifact@v2
       with:
