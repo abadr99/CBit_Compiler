@@ -1,2 +1,0 @@
-/usr/bin/ar qc libfrontend.a  CMakeFiles/frontend.dir/lexer.cpp.o
-/usr/bin/ranlib libfrontend.a
