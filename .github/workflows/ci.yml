@@ -26,7 +26,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Configure Compiler Building
-      run: sh ./scripts/github/configureBuild.sh
+      run: echo $GITHUB_ACTION_PATH
     - name: Building Compiler
       run: sh ./scripts/github/buildCompiler.sh
     - name: Upload objects artifact
