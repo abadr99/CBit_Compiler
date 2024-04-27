@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/home/badr/Desktop/CBit_Compiler/compiler/build",
+  "command": "/usr/bin/g++   -I/home/badr/Desktop/CBit_Compiler/compiler/dev/inc -I/inc  -g   -Wall -g -Werror -std=c++17 -std=gnu++17 -o CMakeFiles/cbit.dir/main.cpp.o -c /home/badr/Desktop/CBit_Compiler/compiler/dev/main.cpp",
+  "file": "/home/badr/Desktop/CBit_Compiler/compiler/dev/main.cpp"
+},
+{
+  "directory": "/home/badr/Desktop/CBit_Compiler/compiler/build/src/frontend",
+  "command": "/usr/bin/g++   -I/inc  -g   -Wall -g -Werror -std=c++17 -std=gnu++17 -o CMakeFiles/frontend.dir/lexer.cpp.o -c /home/badr/Desktop/CBit_Compiler/compiler/dev/src/frontend/lexer.cpp",
+  "file": "/home/badr/Desktop/CBit_Compiler/compiler/dev/src/frontend/lexer.cpp"
+},
+{
+  "directory": "/home/badr/Desktop/CBit_Compiler/compiler/build/src/common",
+  "command": "/usr/bin/g++   -I/home/badr/Desktop/CBit_Compiler/compiler/dev/inc  -g   -Wall -g -Werror -std=c++17 -std=gnu++17 -o CMakeFiles/common.dir/CompilerOptions.cpp.o -c /home/badr/Desktop/CBit_Compiler/compiler/dev/src/common/CompilerOptions.cpp",
+  "file": "/home/badr/Desktop/CBit_Compiler/compiler/dev/src/common/CompilerOptions.cpp"
+},
+{
+  "directory": "/home/badr/Desktop/CBit_Compiler/compiler/build/src/common",
+  "command": "/usr/bin/g++   -I/home/badr/Desktop/CBit_Compiler/compiler/dev/inc  -g   -Wall -g -Werror -std=c++17 -std=gnu++17 -o CMakeFiles/common.dir/OptionParser.cpp.o -c /home/badr/Desktop/CBit_Compiler/compiler/dev/src/common/OptionParser.cpp",
+  "file": "/home/badr/Desktop/CBit_Compiler/compiler/dev/src/common/OptionParser.cpp"
+}
+]

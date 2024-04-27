@@ -1,0 +1,1 @@
+/usr/bin/g++  -g   CMakeFiles/cbit.dir/main.cpp.o  -o cbit  src/common/libcommon.a src/frontend/libfrontend.a 

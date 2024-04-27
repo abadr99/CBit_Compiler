@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/badr/Desktop/CBit_Compiler/compiler/dev/inc/utils/CompilerOptions.hpp
+string
+-
+vector
+-
+
+/home/badr/Desktop/CBit_Compiler/compiler/dev/inc/utils/OptionParser.hpp
+CompilerOptions.hpp
+/home/badr/Desktop/CBit_Compiler/compiler/dev/inc/utils/CompilerOptions.hpp
+
+/home/badr/Desktop/CBit_Compiler/compiler/dev/src/utils/OptionParser.cpp
+utils/OptionParser.hpp
+/home/badr/Desktop/CBit_Compiler/compiler/dev/src/utils/utils/OptionParser.hpp
+

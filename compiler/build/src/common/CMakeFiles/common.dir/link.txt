@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcommon.a  CMakeFiles/common.dir/CompilerOptions.cpp.o CMakeFiles/common.dir/OptionParser.cpp.o
+/usr/bin/ranlib libcommon.a
