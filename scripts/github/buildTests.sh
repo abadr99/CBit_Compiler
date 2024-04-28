@@ -8,7 +8,7 @@ then
     exit 1
 fi
 
-make  -C ./build cbit -j
+make  -C ./build cbit-tests -j
 
 if [ $? -gt 0 ]
 then 
