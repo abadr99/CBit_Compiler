@@ -7,18 +7,18 @@ on:
     branches: [ "main" ]
 
 jobs:
-#   compiler-dev-style-checking:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v3
-#     - name: Compiler-Dev-Style-Check 
-#       run:  python3 ./scripts/lint.py  --recursive ./compiler/dev
-#   compiler-test-style-checking:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v3
-#     - name: Compiler-Test-Style-Check
-#       run:  python3 ./scripts/lint.py  --recursive ./compiler/test
+  compiler-dev-style-checking:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Compiler-Dev-Style-Check 
+      run:  python3 ./scripts/lint.py  --recursive ./compiler/dev
+  compiler-test-style-checking:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Compiler-Test-Style-Check
+      run:  python3 ./scripts/lint.py  --recursive ./compiler/test
 
   build-compiler:
     runs-on: ubuntu-latest
