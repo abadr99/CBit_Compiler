@@ -22,7 +22,7 @@ jobs:
 
   build-compiler:
     runs-on: ubuntu-latest
-    # needs: [compiler-dev-style-checking, compiler-test-style-checking]
+    needs: [compiler-dev-style-checking, compiler-test-style-checking]
     steps:
     - uses: actions/checkout@v3
     - name: Configure Compiler Building
