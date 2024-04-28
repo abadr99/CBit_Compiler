@@ -41,7 +41,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Configuring Tests
-      run:  sh ${{ github.workspace }}/scripts/github/confgiureTests.sh
+      run:  sh ${{ github.workspace }}/scripts/github/configureTests.sh
     - name: Building Tests
       run:  sh ${{ github.workspace }}/scripts/github/buildTests.sh
     - name: Running tests
