@@ -14,7 +14,8 @@
 using namespace cbit::options;
 
 OptionParser::OptionParser(int argc, char* argv[]) : argc_(argc), argv_(argv) {
-    for (int i = 0 ; i < argc ; ++i) {
+    // NOTE: arv[0] = "cbit"
+    for (int i = 1 ; i < argc ; ++i) {
         CompilerOptions::GetCompilerOptions().AddFile(argv[i]);
     }
 }

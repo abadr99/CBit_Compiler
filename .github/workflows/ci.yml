@@ -7,22 +7,22 @@ on:
     branches: [ "main" ]
 
 jobs:
-#   compiler-dev-style-checking:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v3
-#     - name: Compiler-Dev-Style-Check 
-#       run:  python3 ./scripts/lint.py  --recursive ./compiler/dev
-#   compiler-test-style-checking:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v3
-#     - name: Compiler-Test-Style-Check
-#       run:  python3 ./scripts/lint.py  --recursive ./compiler/test
+  compiler-dev-style-checking:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Compiler-Dev-Style-Check 
+      run:  python3 ./scripts/lint.py  --recursive ./compiler/dev
+  compiler-test-style-checking:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Compiler-Test-Style-Check
+      run:  python3 ./scripts/lint.py  --recursive ./compiler/test
 
   build-compiler:
     runs-on: ubuntu-latest
-    # needs: [compiler-dev-style-checking, compiler-test-style-checking]
+    needs: [compiler-dev-style-checking, compiler-test-style-checking]
     steps:
     - uses: actions/checkout@v3
     - name: Configure Compiler Building
@@ -35,14 +35,14 @@ jobs:
         name: objects-artifact
         path: ./compiler/build
 
-#   test:
-#     runs-on: ubuntu-latest
-#     needs: [compiler-dev-style-checking, compiler-test-style-checking, build-compiler]
-#     steps:
-#     - uses: actions/checkout@v3
-#     - name: Configure gtest
-#       run: sh /home/runner/work/stm32f10xxx_cpp_interface/stm32f10xxx_cpp_interface/tools/github/configure-test.sh
-#     - name: Building tests
-#       run: make -C tests build-unittests
-#     - name: Running tests
-#       run: make -C tests run-unittests
+  test:
+    runs-on: ubuntu-latest
+    needs: [compiler-dev-style-checking, compiler-test-style-checking, build-compiler]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Configuring Tests
+      run:  sh ${{ github.workspace }}/scripts/github/configureTests.sh
+    - name: Building Tests
+      run:  sh ${{ github.workspace }}/scripts/github/buildTests.sh
+    - name: Running tests
+      run:  sh ${{ github.workspace }}/scripts/github/runTests.sh
