@@ -1,8 +1,9 @@
 set (src
-     lexer.cpp
+     Lexer.cpp
+     Token.cpp
     )
 
-message(STATUS "Building and linking frontend stage files")
+message(STATUS "Building and linking ${src}")
 
 add_library(frontend ${src})
-target_include_directories(frontend PUBLIC ${CMAKE_PROJECT_DIR}/inc)
+target_include_directories(frontend PRIVATE ${PROJECT_SOURCE_DIR}/dev/inc)
