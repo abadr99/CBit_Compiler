@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2024
  * 
  */
+#ifndef COMPILER_DEV_INC_FRONTEND_LEXER_HPP_ 
+#define COMPILER_DEV_INC_FRONTEND_LEXER_HPP_
 
 #include <string>
 #include <map>
@@ -28,38 +30,16 @@ enum TokenTypes {
     kNewline,
 };
 
-// As token is type and value, Actually we have different types of values 
-// int, char and strings. In order to achieve map that takes different types of
-// values then we have to use the following approach.
-// See: https://stackoverflow.com/questions/24702235/c-stdmap-holding-any-type-of-value
-//      https://godbolt.org/z/Wo8WenMcn
-
-struct BaseTokenValue {
-    BaseTokenValue()  = default;
-    ~BaseTokenValue() = default;
-};
-
-template<typename T>
-struct TokenValue: public BaseTokenValue {
-    TokenValue(T value);
-    T value;
-};
 
 class Lexer {
  public:
-    using TokenStream_t = std::map<TokenTypes, BaseTokenValue>;
-    Lexer(std::string fileName);
-    TokenStream_t GetTokens() const;
+    explicit Lexer(std::string fileName);
  private:
-    using TokenPair_t   = std::pair<TokenTypes, BaseTokenValue&>;
-    using CharToken_t   = TokenValue<char>;
-    using StringToken_t = TokenValue<std::string>;
-    using IntToken_t    = TokenValue<int>;
-
     std::string fileName_;
-    TokenStream_t tokens_;
 };
 
 }  // namespace lexer
-}  // namespace common
+}  // namespace frontend
 }  // namespace cbit
+
+#endif  // COMPILER_DEV_INC_FRONTEND_LEXER_HPP_
