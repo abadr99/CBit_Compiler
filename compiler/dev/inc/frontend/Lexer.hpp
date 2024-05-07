@@ -36,6 +36,7 @@ class Lexer {
     explicit Lexer(std::string fileName);
  private:
     std::string fileName_;
+    void Lex();
 };
 
 }  // namespace lexer

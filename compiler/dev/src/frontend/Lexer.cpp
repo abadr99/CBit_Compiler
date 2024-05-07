@@ -9,3 +9,17 @@
  * 
  */
 
+#include <fstream>
+#include "frontend/Token.hpp"
+#include "frontend/Lexer.hpp"
+
+using namespace cbit::frontend::lexer;
+using namespace cbit::frontend::token;
+
+Lexer::Lexer(std::string fileName) : fileName_(fileName) {
+    Lex();
+}
+
+void Lexer::Lex() {
+
+}
