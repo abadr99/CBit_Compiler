@@ -35,8 +35,15 @@ class Lexer {
  public:
     explicit Lexer(std::string fileName);
  private:
+    using Tokens_t  = std::vector<Token>;
+    using TokenStr_t = std::vector<std::string>;
+
     std::string fileName_;
+    std::ifstream stream_;
+    Tokens_t lexemes_;
     void Lex();
+    TokenStr_t TokenizeLine(std::string line);
+    void AddLexeme(Token token);
 };
 
 }  // namespace lexer
