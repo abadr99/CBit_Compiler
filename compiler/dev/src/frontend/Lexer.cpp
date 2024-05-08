@@ -32,6 +32,10 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
                ch == '_';
     };
     
+    auto IsNumber = [&](char c)->bool {
+        return c >= '0' && c <= '9';
+    };
+
     auto IsComment = [&](uint32 i)->bool {
         return line[i] == '/' && line[i + 1] == '/';
     };
@@ -43,21 +47,35 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
         return c == '\"';
     };
 
+    auto IsBinaryToken = [&](uint32 i)->bool {
+        return line[i] == '=' && line[i + 1] == '=' // ==
+            || line[i] == '!' && line[i + 1] == '=' // !=
+            || line[i] == '<' && line[i + 1] == '=' // <=
+            || line[i] == '>' && line[i + 1] == '=' // >= 
+            || line[i] == '+' && line[i + 1] == '+' // ++
+            || line[i] == '-' && line[i + 1] == '-' // --
+            || line[i] == '&' && line[i + 1] == '&' // &&
+            || line[i] == '|' && line[i + 1] == '|' // ||
+            || line[i] == '<' && line[i + 1] == '<' // << 
+            || line[i] == '>' && line[i + 1] == '>' // << 
+            || line[i] == '+' && line[i + 1] == '=' // +=
+            || line[i] == '-' && line[i + 1] == '=' // -=
+            || line[i] == '*' && line[i + 1] == '=' // *=
+            || line[i] == '/' && line[i + 1] == '=' // /=
+            || line[i] == '%' && line[i + 1] == '=' // %=
+            || line[i] == '&' && line[i + 1] == '=' // &=
+            || line[i] == '|' && line[i + 1] == '=' // |=
+            ;
+    };
+    auto ToString = [&](char c) -> std::string {
+        return std::string(sizeof(char), c);
+    };
+
     typename Lexer::TokenStr_t tokenStr;
     std::string word;
 
     // Iterate over line character by character
     for (uint32 i = 0 ; i < line.size(); ++i) {
-        // ------------------------------------------------- 
-        // IN CASE OF SINGLE COMMENT JUST IGNORE THE COMMENT
-        if (IsComment(i)) {
-            break;
-        }
-        // ----------------------------------------- 
-        // IGNORE SPACES AS WE DON'T CARE ABOUT THEM 
-        if (IsSpace(line[i])) {
-            continue;
-        }
         // ----------------------------------------- 
         // CONSTRUCT THE WHOLE STRING BETWEEN QUOTES
         if (IsQuote(line[i])) { // left quote
@@ -67,10 +85,19 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
                 i++;
             }
             word += "\"";
-            tokenStr.push_back(word);
-            word = "";
             i++;
         }
+        
+        // ------------------------
+        // CONSTRUCT BINARY TOKENS
+        if (IsBinaryToken(i)) {
+            word = ToString(line[i]) + ToString(line[i + 1]);
+            tokenStr.push_back(word);
+            word = "";
+            i++;  // skip next character
+            continue;
+        }
+
         // --------------------------------------------------------------
         // IF WE HAVE WORD THAT IS NOT OPERATOR OR SPECIAL CHARACTER THEN 
         // CONSTRUCT 'word' VARIABLE
@@ -78,14 +105,33 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
             word += line[i];
             i++;
         }
+        
+        // -----------------
+        // CONSTRUCT NUMBERS
+        while (IsNumber(line[i])) {
+            word += line[i];
+            i++;
+        }
+
+        // ------------------------------------------------- 
+        // IN CASE OF SINGLE COMMENT JUST IGNORE THE COMMENT
+        if (IsComment(i)) {
+            break;
+        }
         if (word.size()) { // Avoid pushing empty strings to 'tokenStr'
             tokenStr.push_back(word);
+        	word = "";
         }
-        word = "";
+
+        // ----------------------------------------- 
+        // IGNORE SPACES AS WE DON'T CARE ABOUT THEM 
+        if (IsSpace(line[i])) {
+            continue;
+        }
 
         // ----------------------------------------------
         // OTHERWISE PUSH CURRENT CHARACTER TO 'tokenStr'
-        tokenStr.push_back(std::string(sizeof(char),line[i]));
+        tokenStr.push_back(ToString(line[i]));
     }
     return tokenStr;
 }
