@@ -11,8 +11,9 @@
 #ifndef COMPILER_DEV_INC_FRONTEND_LEXER_HPP_ 
 #define COMPILER_DEV_INC_FRONTEND_LEXER_HPP_
 
+#include <fstream>
 #include <string>
-#include <map>
+#include "frontend/Token.hpp"
 
 namespace cbit {
 namespace frontend {
@@ -35,7 +36,7 @@ class Lexer {
  public:
     explicit Lexer(std::string fileName);
  private:
-    using Tokens_t  = std::vector<Token>;
+    using Tokens_t   = std::vector<cbit::frontend::token::Token>;
     using TokenStr_t = std::vector<std::string>;
 
     std::string fileName_;

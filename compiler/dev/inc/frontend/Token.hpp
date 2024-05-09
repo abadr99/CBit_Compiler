@@ -15,6 +15,8 @@
 #include <variant>
 #include <string>
 
+#include "common/Types.hpp"
+
 namespace cbit {
 namespace frontend {
 namespace token {

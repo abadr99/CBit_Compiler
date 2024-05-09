@@ -16,12 +16,13 @@
 #include <iostream>
 #include <cstdlib>
 
+
 #define CBIT_ASSERT(expr, msg)\
     assert(expr);\
     std::cerr << msg;
 
-#define _UNRERACHABLE\
-    std::cerr << "[UNREACHABLE]: Unreachable code detected in " << __FILE__ << __LINE__;
+#define _UNREACHABLE\
+    std::cerr << "[UNREACHABLE]: Unreachable code detected in " << __FILE__ << __LINE__;\
     std::abort();
 
 #endif  // COMPILER_DEV_INC_COMMON_ASSERT_HPP_
