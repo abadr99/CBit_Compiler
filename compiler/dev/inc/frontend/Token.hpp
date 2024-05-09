@@ -21,13 +21,11 @@ namespace token {
 
 enum class TokenType {
     kKeyword,
-    kType,
     kId,
     kOperator,
-    kSymbols,
+    kSymbol,
     kNumber,
     kString,
-    kComment,
     kNewline,
 };
 

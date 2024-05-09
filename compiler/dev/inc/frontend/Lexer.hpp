@@ -43,7 +43,7 @@ class Lexer {
     Tokens_t lexemes_;
     void Lex();
     TokenStr_t TokenizeLine(std::string line);
-    void AddLexeme(Token token);
+    void AddLexeme(std::string token_str);
 };
 
 }  // namespace lexer
