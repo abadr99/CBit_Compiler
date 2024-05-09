@@ -11,8 +11,10 @@
 
 #include <iostream>
 #include "common/OptionParser.hpp"
+#include "frontend/Lexer.hpp"
 
 using namespace cbit::options;
+using Lexer = cbit::frontend::lexer::Lexer;
 
 int main(int argc, char* argv[]) {
     // Parse all option through command line and fill data in `CompilerOption`
@@ -21,7 +23,7 @@ int main(int argc, char* argv[]) {
     
     // TODO(@abadr): Combine frontend process to one class
     // Run frontend process
-    
+        
     // TODO(@abadr): Combine middle-end process to one class
     // Run middle-end process
     
