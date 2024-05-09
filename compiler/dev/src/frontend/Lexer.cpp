@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 #include <regex>
+#include <cstdio>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -133,8 +134,7 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
     auto InWordRange = [&](char ch) -> bool {
         return (ch >= 'a' && ch <= 'z')
             || (ch >= 'A' && ch <= 'Z')
-            || (ch == '_')
-            ;
+            || (ch == '_');
     };
     auto IsNumber = [&](char c) -> bool {
         return c >= '0' && c <= '9';
@@ -167,9 +167,9 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
         }
         // ----------------------------------------- 
         // CONSTRUCT THE WHOLE STRING BETWEEN QUOTES
-        if (IsQuote(line[i])) { // left quote
+        if (IsQuote(line[i])) {     // left quote
             word += line[i++];
-            while(!IsQuote(line[i])) { // right quote
+            while (!IsQuote(line[i])) {  // right quote
                 word += line[i];
                 i++;
             }
@@ -198,9 +198,9 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
             i++;
         }
 
-        if (word.size()) { // Avoid pushing empty strings to 'tokenStr'
+        if (word.size()) {  // Avoid pushing empty strings to 'tokenStr'
             tokenStr.push_back(word);
-        	word = "";
+            word = "";
         }
         // ----------------------------------------- 
         // IGNORE SPACES AS WE DON'T CARE ABOUT THEM 
@@ -214,8 +214,7 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
     return tokenStr;
 }
 
-void Lexer::AddLexeme(std::string token_str) {
-    
+void Lexer::AddLexeme(std::string token_str) {    
     auto IsString = [&]() -> bool {
         static const std::regex str_regex("\".*\"");
         return std::regex_match(token_str, str_regex);;
@@ -230,7 +229,7 @@ void Lexer::AddLexeme(std::string token_str) {
         static const std::regex bin_regex("(0(b|B)[0-1]+)");
         return std::regex_match(token_str, dec_regex) || 
                std::regex_match(token_str, hex_regex) ||
-               std::regex_match(token_str, bin_regex) ;
+               std::regex_match(token_str, bin_regex);
     };
     auto IsId = [&]() -> bool {
         std::regex id_regex("([a-zA-Z_][a-zA-Z0-9_]*)");
@@ -270,7 +269,7 @@ void Lexer::AddLexeme(std::string token_str) {
 void Lexer::Lex() {
     if (!stream_.is_open()) { 
         std::cerr << "Can't open " << fileName_ << "\n";
-	    std::abort();
+        std::abort();
     }
     // Loop over files and begin lexing each line
     std::string currentLine;
@@ -279,5 +278,5 @@ void Lexer::Lex() {
         for (auto& token : tokens) {
             AddLexeme(token);
         }
-	}
+    }
 }

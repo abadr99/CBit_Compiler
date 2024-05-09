@@ -13,6 +13,8 @@
 
 #include <fstream>
 #include <string>
+#include <vector>
+
 #include "frontend/Token.hpp"
 
 namespace cbit {
