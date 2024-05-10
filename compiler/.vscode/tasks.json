@@ -1,0 +1,49 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "make -s -C ${workspaceFolder}/build -j cbit",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+        },
+        {
+            "label": "Build-Tests",
+            "type": "shell",
+            "command": "make -s -C ${workspaceFolder}/build -j cbit-tests",
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+        },
+        {
+            "label": "Run-test",
+            "type": "shell",
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "command": "${workspaceFolder}/build/cbit-tests --gtest_filter=${input:test-name}",
+        }
+    ],
+    "inputs": [
+        {
+            "id": "test-name",
+            "description": "Test case",
+            "type": "promptString",
+            "default": "*"
+        }
+    ]
+}

@@ -267,7 +267,7 @@ void Lexer::AddLexeme(std::string token_str) {
         return;
     }
     std::cerr << "[Error]: Unrecognized token found " << token_str << "\n";
-    //std::abort();
+    std::abort();
 }
 
 void Lexer::Lex() {

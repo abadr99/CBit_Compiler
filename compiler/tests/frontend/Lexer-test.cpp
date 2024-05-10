@@ -1,6 +1,17 @@
+/**
+ * @file Lexer-test.cpp
+ * @author abadr99 (abdelrhmanezzbadr@outlook.com)
+ * @brief 
+ * @version 0.1
+ * @date 2024-05-10
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include <gtest/gtest.h>
-#include <filesystem>
+#include <filesystem>       // NOLINT [build/c++17]
 #include <string>
+#include <unordered_map>
 
 #include "common/Assert.hpp"
 #include "common/Types.hpp"
@@ -172,7 +183,7 @@ TEST(Lexer, test1) {
     // printf("Error! Factorial of a negative number doesn't exist. :(");
     TestToken<std::string>(lexerOutput[i++], "printf", TokenType::kId);
     TestKnownToken(lexerOutput[i++], "(");
-    TestToken<std::string>(lexerOutput[i++], "\"Error! Factorial of a negative number doesn't exist. :(\"", TokenType::kString);
+    TestToken<std::string>(lexerOutput[i++], "\"Error! Factorial of a negative number doesn't exist. :(\"", TokenType::kString);  // NOLINT [whitespace/line_length]
     TestKnownToken(lexerOutput[i++], ")");
     TestKnownToken(lexerOutput[i++], ";");
 

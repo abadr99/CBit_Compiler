@@ -1,3 +1,13 @@
+/**
+ * @file option-parser.cpp
+ * @author abadr99 (abdelrhmanezzbadr@outlook.com)
+ * @brief 
+ * @version 0.1
+ * @date 2024-05-10
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include <gtest/gtest.h>
 #include "common/CompilerOptions.hpp"
 #include "common/OptionParser.hpp"
@@ -10,7 +20,7 @@ TEST(OptionParser, files) {
     int argc = 3;
     const char* argv[] = {"cbit", "path/to/file1.c", "path/to/file2.c"};
     
-    OptionParser op(argc,const_cast<char**>(argv));
+    OptionParser op(argc, const_cast<char**>(argv));
     auto& opts = op.GetOptions();
 
     EXPECT_STREQ(opts.GetCompiledFiles()[0].c_str(), "path/to/file1.c");
