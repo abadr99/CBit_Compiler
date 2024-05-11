@@ -10,17 +10,15 @@
  */
 
 #include <iostream>
-#include "common/OptionParser.hpp"
+#include "common/CompilerOptions.hpp"
 #include "frontend/Lexer.hpp"
 
-using namespace cbit::options;
+using namespace cbit::common::options;
 using Lexer = cbit::frontend::lexer::Lexer;
 
 int main(int argc, char* argv[]) {
-    // Parse all option through command line and fill data in `CompilerOption`
-    // according to parsed data.
-    OptionParser op(argc, argv);
-    
+    CompilerOptions::GetCompilerOptions().ParseCommandLine(argc, argv);
+        
     // TODO(@abadr): Combine frontend process to one class
     // Run frontend process
         
