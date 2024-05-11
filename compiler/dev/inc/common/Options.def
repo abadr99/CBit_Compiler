@@ -1,0 +1,3 @@
+// NAME, DEFAULT_VAL, DESCRIPTION, OPTION_VALUES
+#define OPTIONS \
+    OPT(keep_lexer, false, "Keep lexer output in .lex file", "true: to keep lexer output, false: don't keep lexer output")
