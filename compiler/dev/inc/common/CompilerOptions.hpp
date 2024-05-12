@@ -9,6 +9,10 @@
  * 
  */
 
+#ifndef COMPILER_DEV_INC_COMMON_COMPILEROPTIONS_HPP_
+#define COMPILER_DEV_INC_COMMON_COMPILEROPTIONS_HPP_
+
+#include <string>
 #include <vector>
 #include <unordered_map>
 #include "common/Options.def"
@@ -58,3 +62,5 @@ class CompilerOptions {
 }   // namespace options
 }   // namespace common
 }   // namespace cbit
+
+#endif  // COMPILER_DEV_INC_COMMON_COMPILEROPTIONS_HPP_

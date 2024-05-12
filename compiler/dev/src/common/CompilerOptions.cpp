@@ -9,6 +9,7 @@
  * 
  */
 
+#include <iostream>
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
@@ -24,14 +25,11 @@ using namespace cbit::common::options;
 // -----------------------------------------------------------------------------
 // OPTIONS CLASS
 // -----------------------------------------------------------------------------
-Option::Option(OptionName name, OptionVal val) : name_(name), val_(val) {
-
-}
+Option::Option(OptionName name, OptionVal val) : name_(name), val_(val)
+{ /* EMPTY */ }
 
 Option::Option(const Option& other) : name_(other.GetName()), val_(other.GetValue())
-{
-
-}
+{ /* EMPTY */ }
 
 typename Option::OptionName Option::GetName() const {
     return name_;
@@ -103,9 +101,9 @@ std::string CompilerOptions::GetOptionVal(const Option& opt) const {
 
 void CompilerOptions::ParseOption(std::string optStr) {
     std::string opt_name;
-    std::string opt_val ;
+    std::string opt_val;
     uint32 i = 0;
-    while(optStr[i] != '=') {
+    while (optStr[i] != '=') {
         opt_name += optStr[i++];
     }
     // Check if we parse a correct option
