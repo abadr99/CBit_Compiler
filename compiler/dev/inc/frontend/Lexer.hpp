@@ -36,9 +36,10 @@ enum TokenTypes {
 
 class Lexer {
  public:
-    explicit Lexer(std::string fileName);
- private:
     using Tokens_t   = std::vector<cbit::frontend::token::Token>;
+    explicit Lexer(std::string fileName);
+    Tokens_t Get() const;
+ private:
     using TokenStr_t = std::vector<std::string>;
 
     std::string fileName_;

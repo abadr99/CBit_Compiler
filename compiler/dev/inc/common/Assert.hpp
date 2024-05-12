@@ -19,10 +19,10 @@
 
 #define CBIT_ASSERT(expr, msg)\
     assert(expr);\
-    std::cerr << msg;
+    if (!expr) std::cerr << msg;
 
 #define _UNREACHABLE\
-    std::cerr << "[UNREACHABLE]: Unreachable code detected in " << __FILE__ << __LINE__;\
+    std::cerr << "[UNREACHABLE]: Unreachable code detected in " << __FILE__ << __LINE__ << "\n";\
     std::abort();
 
 #define _UNIMPLEMENTED\

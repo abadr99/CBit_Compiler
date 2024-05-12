@@ -1,5 +1,5 @@
 {
-    "cmake.sourceDirectory": "/home/badr/Desktop/CBit_Compiler/compiler/dev",
+    "cmake.sourceDirectory": "/home/badr/Desktop/CBit_Compiler/compiler",
     "cSpell.words": [
         "cbit"
     ],
@@ -48,5 +48,6 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "typeinfo": "cpp"
-    }
+    },
+    "C_Cpp.default.compilerPath": "/usr/bin/g++"
 }

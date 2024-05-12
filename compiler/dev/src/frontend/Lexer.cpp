@@ -115,6 +115,9 @@ static const std::unordered_map<std::string, TokenType> knownTokens = {
     {".",        TokenType::kOperator},
     {"->",       TokenType::kOperator},
     {"*",        TokenType::kOperator},
+    {"(",        TokenType::kOperator},
+    {"[",        TokenType::kOperator},
+    {"{",        TokenType::kOperator},
     {"\"",       TokenType::kSymbol},
     {")",        TokenType::kSymbol},
     {"}",        TokenType::kSymbol},
@@ -238,6 +241,7 @@ void Lexer::AddLexeme(std::string token_str) {
     // --- BEGIN WITH KNOWN TOKENS 
     if (knownTokens.count(token_str)) {
         lexemes_.push_back(Token(knownTokens.at(token_str), token_str));
+        return;
     }
     // --- STRING TOKENS
     if (IsString()) {
@@ -279,4 +283,8 @@ void Lexer::Lex() {
             AddLexeme(token);
         }
     }
+}
+
+typename Lexer::Tokens_t Lexer::Get() const {
+    return lexemes_;
 }

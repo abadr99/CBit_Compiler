@@ -45,6 +45,8 @@ class Token {
     char GetCharTokenVal() const;
     uint64 GetIntTokenVal() const;
     std::string GetStringTokenVal() const;
+    TokenType GetTokenType() const;
+    TokenValueType GetTokenValueType() const;
  private:
     TokenType type_;
     std::variant<char, uint64, std::string> value_;
