@@ -36,6 +36,11 @@ class Option {
     OptionVal  val_;
 };
 
+enum class Options {
+   #define OPT(name, ignore0, ignore1, ignore2)  k##name,
+      OPTIONS
+   #undef OPT
+};
 class CompilerOptions {
  public:
     using Options_t    = std::unordered_map<std::string, Option>;
@@ -46,7 +51,8 @@ class CompilerOptions {
     void ParseCommandLine(int argc, char* argv[]);
     Files_t     GetFiles()     const;
     Options_t   GetOptions()   const;
-    std::string GetOptionVal(const Option& opt) const;
+    bool        IsEnabled(const std::string str_opt)    const;
+    std::string GetOptionVal(const std::string str_opt) const;
  private:
     CompilerOptions();
     CompilerOptions(const CompilerOptions& other) = delete;

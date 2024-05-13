@@ -95,8 +95,17 @@ typename CompilerOptions::Options_t CompilerOptions::GetOptions() const {
     return opts_;
 }
 
-std::string CompilerOptions::GetOptionVal(const Option& opt) const {
-    return opts_.at(opt.GetName()).GetValue();
+std::string CompilerOptions::GetOptionVal(const std::string str_opt) const {
+    return opts_.at(str_opt).GetValue();
+}
+
+bool CompilerOptions::IsEnabled(const std::string str_opt) const {
+    std::string opt_val = opts_.at(str_opt).GetValue();
+    if (opt_val == "1" || opt_val == "true")  return true;
+    if (opt_val == "0" || opt_val == "false") return false;
+    CBIT_ASSERT(false, 
+                "Calling CompilerOptions::IsEnabled() with non boolean option");
+    return false;
 }
 
 void CompilerOptions::ParseOption(std::string optStr) {

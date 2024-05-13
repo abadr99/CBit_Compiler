@@ -10,6 +10,7 @@
  */
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -20,11 +21,15 @@
 
 #include "common/Assert.hpp"
 #include "common/Types.hpp"
+#include "common/CompilerOptions.hpp"
 #include "frontend/Token.hpp"
 #include "frontend/Lexer.hpp"
 
+using namespace cbit::common::options;
 using namespace cbit::frontend::lexer;
 using namespace cbit::frontend::token;
+
+#define ALIGN(N)        std::setw(N) << std::left
 
 // Look-up table to represent each known token with its type
 static const std::unordered_set<std::string> binaryTokens = {
@@ -275,7 +280,7 @@ void Lexer::Lex() {
         std::cerr << "Can't open " << fileName_ << "\n";
         std::abort();
     }
-    // Loop over files and begin lexing each line
+    // Loop over lines and begin lexing each line
     std::string currentLine;
     while (std::getline(stream_, currentLine)) {
         auto tokens = TokenizeLine(currentLine);
@@ -283,6 +288,53 @@ void Lexer::Lex() {
             AddLexeme(token);
         }
     }
+    // Check if we should creat .lex file
+    if (CompilerOptions::GetCompilerOptions().IsEnabled("keep_lexer")) {
+        GenerateLexFile();
+    }
+}
+
+void Lexer::GenerateLexFile() {
+    // Generate lex file name by using the same name of the original file
+    // but with .lex extension. e.g. main.c --> main.lex
+    std::string LexFileName = fileName_;
+    LexFileName.replace(fileName_.find("."), fileName_.size()-1, ".lex");
+    std::ofstream lexFile(LexFileName);
+
+    auto Intro = [&]() -> void {
+        lexFile << ALIGN(80) << "Token-Value" << "Token-Type\n";
+    };
+
+    auto ConvertTokenTypeToStr = [&](TokenType type) -> std::string {
+        const std::unordered_map<TokenType, std::string> TokenToStr = {
+            {TokenType::kId,       "ID"},
+            {TokenType::kKeyword,  "KeyWord"},
+            {TokenType::kOperator, "Operator"},
+            {TokenType::kSymbol,   "Symbol"},
+            {TokenType::kNumber,   "Number"},
+            {TokenType::kString,   "String"}
+        };
+        return TokenToStr.at(type);
+    };
+
+    Intro();
+    
+    // Print to the created file
+    for (auto& lexeme : lexemes_) {
+        std::string lexeme_type =  ConvertTokenTypeToStr(lexeme.GetTokenType());
+        switch (lexeme.GetTokenValueType()) {
+            case TokenValueType::kString:
+                lexFile << ALIGN(80) << lexeme.GetStringTokenVal() << lexeme_type << "\n";
+                break;
+            case TokenValueType::kInt:
+                lexFile << ALIGN(80) << lexeme.GetIntTokenVal() << lexeme_type << "\n";
+                break;
+            default: 
+                _UNREACHABLE;
+                break;
+        } 
+    }
+    lexFile.close();
 }
 
 typename Lexer::Tokens_t Lexer::Get() const {
