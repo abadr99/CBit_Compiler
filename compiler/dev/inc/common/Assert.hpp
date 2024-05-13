@@ -25,4 +25,7 @@
     std::cerr << "[UNREACHABLE]: Unreachable code detected in " << __FILE__ << __LINE__ << "\n";\
     std::abort();
 
+#define _UNIMPLEMENTED\
+    std::cerr << "[UNIMPLEMENTED]: Unimplemented feature " << __FILE__ << __LINE__;\
+    std::abort();
 #endif  // COMPILER_DEV_INC_COMMON_ASSERT_HPP_
