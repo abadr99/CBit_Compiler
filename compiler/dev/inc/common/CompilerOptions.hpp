@@ -37,9 +37,9 @@ class Option {
 };
 
 enum class Options {
-   #define OPT(name, ignore0, ignore1, ignore2)  k##name,
-      OPTIONS
-   #undef OPT
+#define OPT(name, ignore0, ignore1, ignore2)  k##name,
+OPTIONS
+#undef OPT
 };
 class CompilerOptions {
  public:
