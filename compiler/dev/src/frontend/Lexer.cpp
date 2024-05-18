@@ -16,16 +16,21 @@
 #include <vector>
 #include <regex>
 #include <cstdio>
+#include <memory>
 #include <unordered_map>
 #include <unordered_set>
-
+    
 #include "common/Assert.hpp"
 #include "common/Types.hpp"
 #include "common/CompilerOptions.hpp"
+#include "common/CompilerReporter.hpp"
+
 #include "frontend/Token.hpp"
 #include "frontend/Lexer.hpp"
 
+using namespace cbit::common::compiler_reporter;
 using namespace cbit::common::options;
+
 using namespace cbit::frontend::lexer;
 using namespace cbit::frontend::token;
 
@@ -271,14 +276,13 @@ void Lexer::AddLexeme(std::string token_str) {
         lexemes_.push_back(Token(TokenType::kId, token_str));
         return;
     }
-    std::cerr << "[Error]: Unrecognized token found " << token_str << "\n";
-    std::abort();
+    std::string msg = "Unrecognized token found" + token_str;
+    CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, 0, msg));
 }
 
 void Lexer::Lex() {
     if (!stream_.is_open()) { 
-        std::cerr << "Can't open " << fileName_ << "\n";
-        std::abort();
+        CompilerAbort::Abort(fileName_, "Can't open file");
     }
     // Loop over lines and begin lexing each line
     std::string currentLine;
