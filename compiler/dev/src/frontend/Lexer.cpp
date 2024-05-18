@@ -227,7 +227,7 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
     return tokenStr;
 }
 
-void Lexer::AddLexeme(std::string token_str) {    
+void Lexer::AddLexeme(std::string token_str, uint32 lineNumber) {    
     auto IsString = [&]() -> bool {
         static const std::regex str_regex("\".*\"");
         return std::regex_match(token_str, str_regex);;
@@ -250,12 +250,12 @@ void Lexer::AddLexeme(std::string token_str) {
     };
     // --- BEGIN WITH KNOWN TOKENS 
     if (knownTokens.count(token_str)) {
-        lexemes_.push_back(Token(knownTokens.at(token_str), token_str));
+        lexemes_.push_back(Token(knownTokens.at(token_str), token_str, lineNumber));
         return;
     }
     // --- STRING TOKENS
     if (IsString()) {
-        lexemes_.push_back(Token(TokenType::kString, token_str));
+        lexemes_.push_back(Token(TokenType::kString, token_str, lineNumber));
         return;
     }
     // --- NUMBER TOKENS
@@ -268,16 +268,16 @@ void Lexer::AddLexeme(std::string token_str) {
         } else {
             std::sscanf(token_str.c_str(), "%ld", &value);
         }
-        lexemes_.push_back(Token(TokenType::kNumber, value));
+        lexemes_.push_back(Token(TokenType::kNumber, value, lineNumber));
         return;
     }
     // --- ID TOKENS
     if (IsId()) {
-        lexemes_.push_back(Token(TokenType::kId, token_str));
+        lexemes_.push_back(Token(TokenType::kId, token_str, lineNumber));
         return;
     }
     std::string msg = "Unrecognized token found" + token_str;
-    CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, 0, msg));
+    CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, lineNumber, msg));
 }
 
 void Lexer::Lex() {
@@ -286,11 +286,13 @@ void Lexer::Lex() {
     }
     // Loop over lines and begin lexing each line
     std::string currentLine;
+    uint32 lineNumber = 1;
     while (std::getline(stream_, currentLine)) {
         auto tokens = TokenizeLine(currentLine);
         for (auto& token : tokens) {
-            AddLexeme(token);
+            AddLexeme(token, lineNumber);
         }
+        lineNumber++;
     }
     // Check if we should creat .lex file
     if (CompilerOptions::GetCompilerOptions().IsEnabled("keep_lexer")) {

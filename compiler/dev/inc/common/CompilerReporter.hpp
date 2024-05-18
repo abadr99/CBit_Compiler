@@ -26,8 +26,7 @@ class CompilerMessage {
  public:
   CompilerMessage(std::string fileName, 
                   uint32 lineNumber, 
-                  std::string msg, 
-                  std::string color);
+                  std::string msg);
   virtual void Print() = 0;
   virtual ~CompilerMessage() = default;
  protected:

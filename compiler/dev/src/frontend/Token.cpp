@@ -16,21 +16,23 @@
 
 using namespace cbit::frontend::token;
 
-Token::Token(TokenType type, char val): type_(type), 
-                                        value_(val), 
-                                        value_type_(TokenValueType::kChar)
-{ /* EMPTY */ }
+Token::Token(TokenType type, char val, uint32 lineNum)
+: type_(type)
+, value_(val)
+, value_type_(TokenValueType::kChar)
+, token_line_number_(lineNum) { /* EMPTY */ }
 
-Token::Token(TokenType type, uint64 val): type_(type), 
-                                          value_(val), 
-                                          value_type_(TokenValueType::kInt)
-{ /* EMPTY */ }
+Token::Token(TokenType type, uint64 val, uint32 lineNum)
+: type_(type)
+, value_(val)
+, value_type_(TokenValueType::kInt)
+, token_line_number_(lineNum) { /* EMPTY */ }
 
-Token::Token(TokenType type, std::string val): type_(type), 
-                                               value_(val), 
-                                               value_type_(TokenValueType::kString)
-{ /* EMPTY */ }
-
+Token::Token(TokenType type, std::string val, uint32 lineNum)
+: type_(type) 
+, value_(val) 
+, value_type_(TokenValueType::kString)
+, token_line_number_(lineNum) { /* EMPTY */ }
 
 char Token::GetCharTokenVal() const {
     CBIT_ASSERT(std::holds_alternative<char>(value_), 

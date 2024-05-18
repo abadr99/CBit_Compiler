@@ -19,6 +19,16 @@
 #include "common/CompilerReporter.hpp"
 
 // -----------------------------------------------------------------------------
+// Some useful defines to format 
+// 
+#define FORMAT_NAME        file_name_ << ":" << line_number_
+#define FORMAT_ERROR       RED_COLOR << "Error:" << DEFAULT_COLOR
+#define FORMAT_WARNING     YELLOW_COLOR << "Warning:" << DEFAULT_COLOR
+#define FORMAT_INFO        BLUE_COLOR << "Info:" << DEFAULT_COLOR
+#define OUT                std::cout
+#define ENDL               ".\n"
+
+// -----------------------------------------------------------------------------
 // NAMESPACES 
 // 
 using namespace cbit::common::compiler_reporter;
@@ -29,41 +39,39 @@ using namespace cbit::common::compiler_reporter;
 // =================================== BASE ===================================
 CompilerMessage::CompilerMessage(std::string fileName, 
                                 uint32       lineNumber, 
-                                std::string  msg,
-                                std::string  color)
+                                std::string  msg)
 : file_name_(fileName)
 , line_number_(lineNumber)
-, msg_(msg)
-, color_(color) {
+, msg_(msg) {
     /* EMPTY */
 }
 // =================================== ERROR ===================================
 CompilerError::CompilerError(std::string fileName, uint32 lineNumber, std::string msg) 
-: CompilerMessage(fileName, lineNumber, msg, RED_COLOR) {
+: CompilerMessage(fileName, lineNumber, msg) {
     /* EMPTY */
 }
 
 void CompilerError::Print() {
-    std::cout << color_ << "Error: " << DEFAULT_COLOR << msg_ << ":" << line_number_ << ".\n";
+    OUT << FORMAT_NAME << " " << FORMAT_ERROR << " " << msg_ << ENDL;
 }
 // =================================== WARNING =================================
 CompilerWarning::CompilerWarning(std::string fileName, uint32 lineNumber, std::string msg)
-: CompilerMessage(fileName, lineNumber, msg, YELLOW_COLOR) {
+: CompilerMessage(fileName, lineNumber, msg) {
     /* EMPTY */
 }
 
 void CompilerWarning::Print() {
-    std::cout << color_ << "Warning: " << DEFAULT_COLOR << msg_ << ":" << line_number_ << ".\n";
+    OUT << FORMAT_NAME << " " << FORMAT_WARNING << " " << msg_ << ENDL;
 }
 
 // =================================== INFO ====================================
 CompilerInfo::CompilerInfo(std::string fileName, uint32 lineNumber, std::string msg)
-: CompilerMessage(fileName, lineNumber, msg, BLUE_COLOR) {
+: CompilerMessage(fileName, lineNumber, msg) {
     /* EMPTY */
 }
 
 void CompilerInfo::Print() {
-    std::cout << color_ << "Info: " << DEFAULT_COLOR << msg_ << ".\n";
+    OUT << FORMAT_NAME << " " << FORMAT_INFO << " " << msg_ << ENDL;
 }
 
 // -----------------------------------------------------------------------------
