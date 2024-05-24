@@ -39,9 +39,9 @@ enum class TokenValueType {
 
 class Token {
  public:
-    Token(TokenType type, char val);
-    Token(TokenType type, uint64 val);
-    Token(TokenType type, std::string val);
+    Token(TokenType type, char val, uint32 lineNum);
+    Token(TokenType type, uint64 val, uint32 lineNum);
+    Token(TokenType type, std::string val, uint32 lineNum);
     char GetCharTokenVal() const;
     uint64 GetIntTokenVal() const;
     std::string GetStringTokenVal() const;
@@ -51,6 +51,7 @@ class Token {
     TokenType type_;
     std::variant<char, uint64, std::string> value_;
     TokenValueType value_type_;
+    uint32 token_line_number_;
 };
 
 

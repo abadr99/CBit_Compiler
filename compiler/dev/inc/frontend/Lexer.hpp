@@ -48,7 +48,7 @@ class Lexer {
 
     void Lex();
     TokenStr_t TokenizeLine(std::string line);
-    void AddLexeme(std::string token_str);
+    void AddLexeme(std::string token_str, uint32 lineNumber);
     void GenerateLexFile();
 };
 

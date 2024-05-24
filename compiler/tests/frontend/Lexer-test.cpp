@@ -15,6 +15,8 @@
 
 #include "common/Assert.hpp"
 #include "common/Types.hpp"
+#include "common/CompilerReporter.hpp"
+
 #include "frontend/Lexer.hpp"
 
 using namespace cbit::frontend::lexer;
@@ -122,7 +124,6 @@ void TestKnownToken(Token t, std::string expectedVal) {
     EXPECT_EQ(t.GetStringTokenVal(), expectedVal);
     EXPECT_EQ(t.GetTokenType(), knownTokens.at(expectedVal));
 }
-
 TEST(Lexer, test1) {
     std::filesystem::path currentPath = __FILE__;
     std::filesystem::path parentDirectory = currentPath.parent_path();
