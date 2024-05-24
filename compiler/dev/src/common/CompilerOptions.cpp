@@ -74,10 +74,9 @@ void CompilerOptions::ParseCommandLine(int argc, char* argv[]) {
 
     // -- RECOGNIZE COMMAND LINE OPTIONS
     for (uint32 i = 0 ; i < cmd_line.size(); ++i) {
-        // Parse -o options 
-        // syntax: -o option=value
-        if (cmd_line[i] == "-o") {
-            ++i;  // Get next command string
+        // Parse -- options 
+        // syntax: -- option=value
+        if (cmd_line[i].compare(0, 2, "--") == 0) {
             ParseOption(cmd_line[i]);
         } else if (cmd_line[i] == "--help") {
             PrintHelpMsg();
@@ -111,7 +110,7 @@ bool CompilerOptions::IsEnabled(const std::string str_opt) const {
 void CompilerOptions::ParseOption(std::string optStr) {
     std::string opt_name;
     std::string opt_val;
-    uint32 i = 0;
+    uint32 i = 2;  // start with second character in order to ignore "--"
     while (optStr[i] != '=') {
         opt_name += optStr[i++];
     }
