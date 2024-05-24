@@ -20,7 +20,7 @@ TEST(CompilerOptions, Options) {
     const char* argv[] = {"cbit", 
                           "path/to/file1.c", 
                           "path/to/file2.c", 
-                          "-o", "keep_lexer=1"};
+                          "--keep_lexer=1"};
     CompilerOptions::GetCompilerOptions().ParseCommandLine(argc, const_cast<char**>(argv));
     auto options = CompilerOptions::GetCompilerOptions().GetOptions();
     ASSERT_NE(options.find("keep_lexer"), options.end());
