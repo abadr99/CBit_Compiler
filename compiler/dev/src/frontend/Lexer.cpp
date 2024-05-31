@@ -291,13 +291,13 @@ void Lexer::AddLexeme(std::string token_str, uint32 lineNumber) {
     if (IsNumber()) {
         uint64 value;
         if (token_str.substr(0, 2) == "0x" || token_str.substr(0, 2) == "0X") {
-            if (!strings::ConvertHexStringToInt<uint64>(token_str.substr(2), value)) {
+            if (!strings::ConvertHexStringToInt<uint64>(token_str.substr(2), &value)) {
                 std::string msg = "Expected Hex Constant";
                 CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, lineNumber, msg));  // NOLINT [whitespace/line_length]
                 return;
             }
         } else if (token_str.substr(0, 2) == "0b" || token_str.substr(0, 2) == "0B") {
-            if (!strings::ConvertBinaryStringToInt<uint64>(token_str.substr(2), value)) {
+            if (!strings::ConvertBinaryStringToInt<uint64>(token_str.substr(2), &value)) {
                 std::string msg = "Expected Binary Constant";
                 CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, lineNumber, msg));  // NOLINT [whitespace/line_length]
                 return;
