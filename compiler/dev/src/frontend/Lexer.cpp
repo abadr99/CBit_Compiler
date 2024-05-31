@@ -19,7 +19,8 @@
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>
-    
+
+#include "common/Utils.hpp"
 #include "common/Assert.hpp"
 #include "common/Types.hpp"
 #include "common/CompilerOptions.hpp"
@@ -30,6 +31,7 @@
 
 using namespace cbit::common::compiler_reporter;
 using namespace cbit::common::options;
+using namespace cbit::common::utils;
 
 using namespace cbit::frontend::lexer;
 using namespace cbit::frontend::token;
@@ -144,13 +146,24 @@ Lexer::Lexer(std::string fileName) : fileName_(fileName), stream_(fileName) {
 }
 
 typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
-    auto InWordRange = [&](char ch) -> bool {
+    auto IsWord = [&](char ch) -> bool {
         return (ch >= 'a' && ch <= 'z')
             || (ch >= 'A' && ch <= 'Z')
             || (ch == '_');
     };
     auto IsNumber = [&](char c) -> bool {
         return c >= '0' && c <= '9';
+    };
+    auto InWordRange = [&](char ch) -> bool {
+        return IsWord(ch) || IsNumber(ch);
+    };
+    auto IsBinaryNumber = [&](uint32 i) -> bool {
+        return (line[i] == '0' && line[i+1] == 'b')
+            || (line[i] == '0' && line[i+1] == 'B');
+    };
+    auto IsHexNumber = [&](uint32 i) -> bool {
+        return (line[i] == '0' && line[i+1] == 'x') 
+            || (line[i] == '0' && line[i+1] == 'X');
     };
     auto IsComment = [&](uint32 i) -> bool {
         return line[i] == '/' && line[i + 1] == '/';
@@ -167,7 +180,10 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
     auto ToString = [&](char c) -> std::string {
         return std::string(sizeof(char), c);
     };
-
+    auto IsHexChar = [&](char c) -> bool {
+        return (c >= 'a' && c <= 'f') 
+            || (c >= 'A' && c <= 'F');
+    };
     typename Lexer::TokenStr_t tokenStr;
     std::string word;
 
@@ -197,20 +213,33 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
             i++;  // skip next character
             continue;
         }
+        // -----------------
+        // CONSTRUCT NUMBERS
+        while (IsNumber(line[i]) && !IsBinaryNumber(i) && !IsHexNumber(i)) {
+            word += line[i++];
+        }
+        if (IsBinaryNumber(i)) {
+            word = "0b";
+            i += 2; // skip 0b
+            while (line[i] == '0' || line[i] == '1') {
+                word += line[i++];
+            }
+        }
+        if (IsHexNumber(i)) {
+            word = "0x";
+            i += 2; // skip 0x
+            while (IsNumber(line[i]) || IsHexChar(line[i])) {
+                word += line[i++];
+            }
+        }
         // --------------------------------------------------------------
         // IF WE HAVE WORD THAT IS NOT OPERATOR OR SPECIAL CHARACTER THEN 
         // CONSTRUCT 'word' VARIABLE
-        while (InWordRange(line[i])) {
-            word += line[i];
-            i++;
+        if (IsWord(line[i])) {
+            while (InWordRange(line[i])) {
+                word += line[i++];
+            }
         }
-        // -----------------
-        // CONSTRUCT NUMBERS
-        while (IsNumber(line[i])) {
-            word += line[i];
-            i++;
-        }
-
         if (word.size()) {  // Avoid pushing empty strings to 'tokenStr'
             tokenStr.push_back(word);
             word = "";
@@ -236,7 +265,7 @@ void Lexer::AddLexeme(std::string token_str, uint32 lineNumber) {
         // Numbers begin with one of the following:
         // 1) number and remaining is digits from '0' to '9'
         // 2) 0x for hex numbers and remaining is digits from '0' to '9' and 'A' to 'E'
-        // 3_ 0b for bin numbers and remaining is digits from '0' to '1'
+        // 3) 0b for bin numbers and remaining is digits from '0' to '1'
         static const std::regex dec_regex("(-?[0-9]+(UL|L|ULL)?)");
         static const std::regex hex_regex("(0(x|X)[0-9a-fA-F]+)");
         static const std::regex bin_regex("(0(b|B)[0-1]+)");
@@ -262,9 +291,17 @@ void Lexer::AddLexeme(std::string token_str, uint32 lineNumber) {
     if (IsNumber()) {
         uint64 value;
         if (token_str.substr(0, 2) == "0x" || token_str.substr(0, 2) == "0X") {
-            std::sscanf(token_str.c_str(), "%lx", &value);
+            if (!strings::ConvertHexStringToInt<uint64>(token_str.substr(2), value)) {
+                std::string msg = "Expected Hex Constant";
+                CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, lineNumber, msg));
+                return;
+            }
         } else if (token_str.substr(0, 2) == "0b" || token_str.substr(0, 2) == "0B") {
-            std::sscanf(token_str.c_str(), "%li", &value);
+            if (!strings::ConvertBinaryStringToInt<uint64>(token_str.substr(2), value)) {
+                std::string msg = "Expected Binary Constant";
+                CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, lineNumber, msg));
+                return;
+            }
         } else {
             std::sscanf(token_str.c_str(), "%ld", &value);
         }
@@ -276,7 +313,7 @@ void Lexer::AddLexeme(std::string token_str, uint32 lineNumber) {
         lexemes_.push_back(Token(TokenType::kId, token_str, lineNumber));
         return;
     }
-    std::string msg = "Unrecognized token found" + token_str;
+    std::string msg = "Unrecognized token found " + token_str;
     CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, lineNumber, msg));
 }
 
