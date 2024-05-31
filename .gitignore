@@ -2,3 +2,5 @@ compiler/build/
 compiler/.vscode/
 .vscode
 compiler/.vscode/**
+compiler/regressions/**/Output/
+compiler/regressions/.lit_test_times.txt
