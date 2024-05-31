@@ -220,14 +220,14 @@ typename Lexer::TokenStr_t Lexer::TokenizeLine(std::string line) {
         }
         if (IsBinaryNumber(i)) {
             word = "0b";
-            i += 2; // skip 0b
+            i += 2;  // skip 0b
             while (line[i] == '0' || line[i] == '1') {
                 word += line[i++];
             }
         }
         if (IsHexNumber(i)) {
             word = "0x";
-            i += 2; // skip 0x
+            i += 2;  // skip 0x
             while (IsNumber(line[i]) || IsHexChar(line[i])) {
                 word += line[i++];
             }
@@ -293,13 +293,13 @@ void Lexer::AddLexeme(std::string token_str, uint32 lineNumber) {
         if (token_str.substr(0, 2) == "0x" || token_str.substr(0, 2) == "0X") {
             if (!strings::ConvertHexStringToInt<uint64>(token_str.substr(2), value)) {
                 std::string msg = "Expected Hex Constant";
-                CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, lineNumber, msg));
+                CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, lineNumber, msg));  // NOLINT [whitespace/line_length]
                 return;
             }
         } else if (token_str.substr(0, 2) == "0b" || token_str.substr(0, 2) == "0B") {
             if (!strings::ConvertBinaryStringToInt<uint64>(token_str.substr(2), value)) {
                 std::string msg = "Expected Binary Constant";
-                CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, lineNumber, msg));
+                CompilerReporter::Get().Add(std::make_unique<CompilerError>(fileName_, lineNumber, msg));  // NOLINT [whitespace/line_length]
                 return;
             }
         } else {
