@@ -1,4 +1,5 @@
-// RUN: %cbit %s -o keep_lexer=true 
+// RUN: %cbit %s --keep_lexer=true 
+// RUN: diff basic1.lex basic1.expected 
 
 int main() {
     int n, i;
