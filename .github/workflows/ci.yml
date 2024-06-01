@@ -58,6 +58,8 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: objects-artifact
-        path: ${{ github.workspace }}/compiler/build/cbit
+        path: ${{ github.workspace }}/compiler/build/
+    - name: Converting to executable
+      run: chmod -x ${{ github.workspace }}/compiler/build/
     - name: Running tests
       run:  sh ${{ github.workspace }}/scripts/github/runRegressionTests.sh
