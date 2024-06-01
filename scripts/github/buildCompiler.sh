@@ -5,7 +5,9 @@
 # 1) in this script 
 # 2) in test jobs
 
-sh scripts/github/configureTests.sh
+sudo apt-get install libgtest-dev
+sudo apt-get install cmake
+
 cd ./compiler
 cmake -B ./build 
 
