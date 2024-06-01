@@ -62,7 +62,6 @@ jobs:
     - name: Converting to executable
       run: | 
         chmod +x ${{ github.workspace }}/compiler/build/cbit && ls -l ${{ github.workspace }}/compiler/build/
-        filecheck
         FileCheck
         FileCheck-10
     - name: Running tests
