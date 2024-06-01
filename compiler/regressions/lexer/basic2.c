@@ -1,4 +1,4 @@
-// RUN: %cbit %s --keep_lexer=true 
+// RUN: cbit %s --keep_lexer=true 
 // RUN: diff basic2.lex basic2.expected 
 // RUN: rm -rf basic2.lex
 
