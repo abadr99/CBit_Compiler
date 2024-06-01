@@ -60,6 +60,6 @@ jobs:
         name: objects-artifact
         path: ${{ github.workspace }}/compiler/build/
     - name: Converting to executable
-      run: ls ${{ github.workspace }}/compiler/build/ && chmod +x ${{ github.workspace }}/compiler/build/
+      run: chmod +x ${{ github.workspace }}/compiler/build/ && ls -l ${{ github.workspace }}/compiler/build/
     - name: Running tests
       run:  sh ${{ github.workspace }}/scripts/github/runRegressionTests.sh
